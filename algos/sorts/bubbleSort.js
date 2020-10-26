@@ -44,10 +44,13 @@ function bubbleSort(nums) {
         const temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
+
+        // array destructure swap syntax
+        // [nums[i], nums[j]] = [nums[j], nums[i]];
       }
     }
   }
   return nums;
 }
 
-module.exports = { bubbleSort };
+module.exports = { bubbleSort: bubbleSort };
