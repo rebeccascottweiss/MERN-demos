@@ -31,6 +31,28 @@ const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
  * Average: O(n^2) quadratic
  * Worst:   O(n^2) quadratic
  */
-function selectionSort(nums) {}
+function selectionSort(nums) {
+  const len = nums.length;
+  let selectedIdx = 0;
+  let idxOfCurrMin = 0;
+
+  while (selectedIdx < len) {
+    for (let i = selectedIdx; i < len; i++) {
+      if (nums[i] < nums[idxOfCurrMin]) {
+        idxOfCurrMin = i;
+      }
+    }
+
+    if (nums[selectedIdx] !== nums[idxOfCurrMin]) {
+      const temp = nums[selectedIdx];
+      nums[selectedIdx] = nums[idxOfCurrMin];
+      nums[idxOfCurrMin] = temp;
+    }
+    selectedIdx += 1;
+    // reset idxOfCurrMin to the next selected index we are going to work with to find the next min
+    idxOfCurrMin = selectedIdx;
+  }
+  return nums;
+}
 
 module.exports = { selectionSort };
