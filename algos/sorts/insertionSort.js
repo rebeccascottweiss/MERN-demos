@@ -81,6 +81,33 @@ function insertionSortSwap(nums) {
   return nums;
 }
 
+// Steven	Wittkopf & Ian solution
+function insertionSortWithBinarySearch(arr) {
+  let insertionIndex, insertee, i, j;
+  function insertionSearch(insertee, upperbound) {
+    let lowerbound, searchIndex;
+    lowerbound = -1;
+    while (upperbound - lowerbound > 1) {
+      searchIndex = Math.floor((lowerbound + upperbound) / 2);
+      if (arr[searchIndex] <= insertee) {
+        lowerbound = searchIndex;
+      } else {
+        upperbound = searchIndex;
+      }
+    }
+    return upperbound;
+  }
+  for (i = 1; i < arr.length; i++) {
+    insertee = arr[i];
+    insertionIndex = insertionSearch(insertee, i);
+    for (j = i; j > insertionIndex; j--) {
+      arr[j] = arr[j - 1];
+    }
+    arr[insertionIndex] = insertee;
+  }
+  return arr;
+}
+
 const sorted = insertionSort(numsRandomOrder);
 
 module.exports = { insertionSort };
