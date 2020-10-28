@@ -43,10 +43,42 @@ const expectedMerge4 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
  *          @left and @right are sorted
  * @return  {Array<number>}
  *          A new sorted array containing all the elements of @left and @right
- * Time:    O(...)
- * Space:   O(...)
+ * Time:    O(n + m) -> O(n)
+ *          n = left.length
+ *          m = right.length
+ * Space:   O(n + m) -> O(n)
  */
-function merge(left, right) {}
+function merge(left, right) {
+  let result = [];
+  let indexLeft = 0;
+  let indexRight = 0;
+
+  while (indexLeft < left.length && indexRight < right.length) {
+    if (left[indexLeft] < right[indexRight]) {
+      result.push(left[indexLeft]);
+      indexLeft++;
+    } else {
+      result.push(right[indexRight]);
+      indexRight++;
+    }
+  }
+
+  // in case one of the arrays has remaining items due to unequal lengths, all of those can be added
+  while (indexLeft < left.length) {
+    result.push(left[indexLeft]);
+    indexLeft++;
+  }
+
+  while (indexRight < right.length) {
+    result.push(right[indexRight]);
+    indexRight++;
+  }
+
+  return result;
+
+  // one liner version of adding in any left over items
+  // return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
+}
 
 // mergeSort
 const numsOrdered = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -64,6 +96,17 @@ const expectedSort = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
  * Avg:     O(n log(n)) linearithmic
  * Worst:   O(n log(n)) linearithmic
  */
-function mergeSort(nums) {}
+function mergeSort(nums) {
+  if (nums.length === 1) {
+    // return once we hit an array with a single item
+    return nums;
+  }
+
+  const middle = Math.floor(nums.length / 2); // get the middle item of the array rounded down
+  const left = nums.slice(0, middle); // items on the left side
+  const right = nums.slice(middle); // items on the right side
+
+  return merge(mergeSort(left), mergeSort(right));
+}
 
 module.exports = { merge, mergeSort };
