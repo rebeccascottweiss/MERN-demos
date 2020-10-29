@@ -11,7 +11,7 @@ class Counter extends React.Component {
     // pass the props to the parent constructor so the
     // parent can supervise our child class
     super(props);
-    console.log(props);
+    // console.log(props);
 
     this.state = {
       clickCount: props.start,
@@ -28,6 +28,11 @@ class Counter extends React.Component {
       clickTimes: [...this.state.clickTimes, new Date()],
     });
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate prevProps:", prevProps);
+    console.log("componentDidUpdate prevState:", prevState);
+  }
 
   render() {
     return (
