@@ -16,18 +16,22 @@ function App() {
       {/* Execute the QuoteList function and pass it props (params) */}
       <QuoteList
         quotes={[
-          "Across The Vast Expanse Of Space, Memes Echo Into Eternity.",
-          "Born too early to explore the galaxy. Born too late to explore the earth. Born just in time to browse dank memes.",
-          "I'll study later.",
-          "I'm leaving the house right now.",
+          { author: "Student1", text: "I'll study later." },
+          { author: "Student2", text: "I'm leaving the house right now." },
         ]}
       />
 
       <h2>Another List of Quotes</h2>
       <QuoteList
         quotes={[
-          "Programmer: it will be done in an hour.",
-          "Pineapples do not belong on Pizza",
+          {
+            author: "10x Programmer",
+            text: "Programmer: it will be done in an hour.",
+          },
+          {
+            author: "Literally, everyone",
+            text: "Pineapples do not belong on Pizza",
+          },
         ]}
       />
 
