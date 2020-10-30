@@ -43,6 +43,13 @@ const expected2 = [1, 3, 4, 9, 12, 13, 17, 21, 27];
  * Average: O(n log(n)) linearithmic
  * Worst:   O(n^2) quadratic
  */
-function quickSort(nums = [], left = 0, right = nums.length - 1) {}
+function quickSort(nums = [], left = 0, right = nums.length - 1) {
+  if (left < right) {
+    const pivotIndex = partition(nums, left, right);
+    quickSort(nums, left, pivotIndex - 1);
+    quickSort(nums, pivotIndex + 1, right);
+  }
+  return nums;
+}
 
 module.exports = { quickSort };
