@@ -20,7 +20,11 @@ function App() {
         <Secondary path="/secondary" />
         <Launches path="/launches" />
 
-        {/* :id is a URL Parameter, some id value will be inserted there when the URL is visited and available in props by the same name.  */}
+        {/*
+          :id is a URL Parameter, some id value will be inserted there when the URL is visited and available in props by the same name.
+
+          This is like the urls.py /launches/<int:id>
+        */}
         <SingleLaunch path="/launches/:id" />
         {/* noThrow means don't cause an error if they go to the wrong URL */}
         <Redirect from="/home" to="/" noThrow="true" />
