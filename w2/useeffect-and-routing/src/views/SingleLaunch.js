@@ -39,6 +39,13 @@ const SingleLaunch = (props) => {
       <p>Date: {launch.launch_date_local}</p>
       <p>Rocket Name: {launch.rocket.rocket_name}</p>
       <p>Rocket Type: {launch.rocket.rocket_type}</p>
+
+      <h3>Ships:</h3>
+      <ul>
+        {launch.ships.map((ship, i) => {
+          return <li key={i}>{ship}</li>;
+        })}
+      </ul>
     </div>
   );
 };

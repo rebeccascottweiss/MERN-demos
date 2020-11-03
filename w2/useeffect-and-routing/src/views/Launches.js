@@ -37,6 +37,14 @@ const Launches = (props) => {
             </Link>
             <p>{launch.details}</p>
             <p>Date: {launch.launch_date_local}</p>
+
+            {/* extra, nested map because ships is an array */}
+            <h3>Ships:</h3>
+            <ul>
+              {launch.ships.map((ship, i) => {
+                return <li key={i}>{ship}</li>;
+              })}
+            </ul>
             <hr />
           </div>
         );
