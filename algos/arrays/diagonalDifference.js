@@ -1,4 +1,3 @@
-// https://www.hackerrank.com/challenges/diagonal-difference/problem
 /* 
   Given a square matrix (2d array) of integers
   Calculate the absolute difference between the sums of its diagonals
