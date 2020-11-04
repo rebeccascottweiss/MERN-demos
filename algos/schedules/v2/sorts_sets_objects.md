@@ -27,3 +27,5 @@
 2. Tue
    - [diagonalDifference](../../arrays/diagonalDifference.js)
    - [orderedMultisetUnion](../../arrays/orderedMultisetUnion.js)
+3. Wed
+   - [symmetricDifferences](../../arrays/symmetricDifferences.js)
