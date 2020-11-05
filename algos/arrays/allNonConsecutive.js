@@ -29,6 +29,21 @@ const expected1 = [
  * Time:     O(...)
  * Space:    O(...)
  */
-function allNonConsecutive(sortedNums) {}
+function allNonConsecutive(sortedNums) {
+  const output = [];
+
+  for (let i = 1; i < sortedNums.length; i++) {
+    const prevNum = sortedNums[i - 1];
+    const currNum = sortedNums[i];
+
+    if (prevNum + 1 !== currNum) {
+      output.push({
+        i: i,
+        n: currNum,
+      });
+    }
+  }
+  return output;
+}
 
 module.exports = { allNonConsecutive };
