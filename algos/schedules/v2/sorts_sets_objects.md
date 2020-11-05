@@ -29,3 +29,6 @@
    - [orderedMultisetUnion](../../arrays/orderedMultisetUnion.js)
 3. Wed
    - [symmetricDifferences](../../arrays/symmetricDifferences.js)
+4. Thur
+   - [allNonConsecutive](../../arrays/allNonConsecutive.js)
+   - [findConsqSums](../../arrays/findConsqSums.js)
