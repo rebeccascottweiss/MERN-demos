@@ -32,3 +32,6 @@
 4. Thur
    - [allNonConsecutive](../../arrays/allNonConsecutive.js)
    - [findConsqSums](../../arrays/findConsqSums.js)
+5. Fri
+   - [twoSum](../../arrays/twoSum.js)
+   - [kMostFrequent](../../arrays/kMostFrequent.js)
