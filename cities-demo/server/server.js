@@ -1,6 +1,6 @@
 const port = 8000;
 const dbName = "cities-demo";
-// const cors = require("cors");
+const cors = require("cors");
 const express = require("express");
 
 // requiring a file will execute the code in that file, and if the file
@@ -11,6 +11,7 @@ const app = express();
 
 // WITHOUT THIS req.body will be undefined (the body / data of a form submission)
 app.use(express.json());
+app.use(cors());
 
 require("./routes/city.routes")(app);
 
