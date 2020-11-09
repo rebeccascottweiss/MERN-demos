@@ -14,7 +14,7 @@ module.exports = {
         res.json(city);
       })
       .catch((err) => {
-        res.json(err);
+        res.status(400).json(err);
       });
   },
 
@@ -28,7 +28,7 @@ module.exports = {
         res.json(cities);
       })
       .catch((err) => {
-        res.json(err);
+        res.status(400).json(err);
       });
   },
 
@@ -40,7 +40,7 @@ module.exports = {
         res.json(city);
       })
       .catch((err) => {
-        res.json(err);
+        res.status(400).json(err);
       });
   },
 
@@ -52,7 +52,7 @@ module.exports = {
         res.json(city);
       })
       .catch((err) => {
-        res.json(err);
+        res.status(400).json(err);
       });
   },
 
@@ -69,7 +69,7 @@ module.exports = {
         res.json(city);
       })
       .catch((err) => {
-        res.json(err);
+        res.status(400).json(err);
       });
   },
 };

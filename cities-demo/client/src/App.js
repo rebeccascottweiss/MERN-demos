@@ -7,6 +7,7 @@ import NotFound from "./views/NotFound";
 import NewCity from "./views/NewCity";
 import Cities from "./views/Cities";
 import City from "./views/City";
+import EditCity from "./views/EditCity";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <NewCity path="/cities/new" />
         <Cities path="/cities" />
         <City path="/cities/:id" />
+        <EditCity path="/cities/:id/edit" />
         <NotFound default />
       </Router>
     </div>

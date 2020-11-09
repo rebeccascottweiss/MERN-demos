@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { navigate } from "@reach/router";
 import axios from "axios";
 
-const NewCity = (props) => {
+const NestedNewCityExample = (props) => {
   const [name, setName] = useState("");
   const [population, setPopulation] = useState("");
   const [imgUrl, setImgUrl] = useState("");
@@ -27,8 +27,10 @@ const NewCity = (props) => {
     axios
       .post("http://localhost:8000/api/cities", newCity)
       .then((res) => {
-        console.log(res);
-        navigate("/cities");
+        const newCity = res.data;
+        console.log(newCity);
+
+        props.setCities([...props.cities, newCity]);
       })
       .catch((err) => {
         console.log(err);
@@ -81,4 +83,4 @@ const NewCity = (props) => {
   );
 };
 
-export default NewCity;
+export default NestedNewCityExample;
