@@ -18,6 +18,8 @@
 5. Fri
    - [quickSort](../../sorts/quickSort.js)
 
+---
+
 ## Week 2 - [Sets & Arrays](../../arrays)
 
 - [sets intro](../../arrays/sets.md)
@@ -35,3 +37,11 @@
 5. Fri
    - [twoSum](../../arrays/twoSum.js)
    - [kMostFrequent](../../arrays/kMostFrequent.js)
+
+---
+
+## Week 3 - Object Practice
+
+1. Mon
+   - [entries](../../recreated_methods/Object/entries.js)
+   - [insert](../../objects/insert.js)
