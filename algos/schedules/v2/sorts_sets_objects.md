@@ -45,3 +45,6 @@
 1. Mon
    - [entries](../../recreated_methods/Object/entries.js)
    - [insert](../../objects/insert.js)
+2. Tue
+   - [findObjects](../../objects/findObjects.js)
+   - [findByIdAndUpdate](../../objects/findByIdAndUpdate.js)
