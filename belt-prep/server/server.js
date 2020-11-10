@@ -5,6 +5,7 @@ const express = require("express");
 
 // requiring a file will execute the code in that file, and if the file
 // the function is imported and then immediately executed
+
 require("./config/mongoose.config")(dbName);
 
 const app = express();
