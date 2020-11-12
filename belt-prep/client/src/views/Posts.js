@@ -11,7 +11,7 @@ const Posts = (props) => {
     axios
       .get("http://localhost:8000/api/posts")
       .then((res) => {
-        console.log("get all posts", res.data);
+        console.log("get all posts", res);
         setPosts(res.data);
       })
       .catch((err) => {
@@ -46,43 +46,6 @@ const Posts = (props) => {
     // setPosts(filteredArr);
   }
 
-  function handleLike(post) {
-    const updatedPost = { likeCount: post.likeCount + 1 };
-
-    axios
-      .put("http://localhost:8000/api/posts/" + post._id, updatedPost)
-      .then((res) => {
-        // create a new array containing all the same posts except with the one post
-        // replaced with the updated post from the DB response so that we can update state
-        const updatedPosts = posts.map((currPost) => {
-          if (currPost._id === post._id) {
-            return res.data;
-          } else {
-            return currPost;
-          }
-        });
-
-        setPosts(updatedPosts);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  // easier way to do it, but this mutates state directly so is not preferred
-  // function handleLike(post) {
-  //   post.likeCount++;
-
-  //   axios
-  //     .put("http://localhost:8000/api/posts/" + post._id, post)
-  //     .then((res) => {
-  //       setPosts([...posts]);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
   // database has not responded to our request for data yet..
   if (posts === null) {
     return "Loading...";
@@ -100,12 +63,8 @@ const Posts = (props) => {
                   src="https://i.pinimg.com/originals/39/44/6c/39446caa52f53369b92bc97253d2b2f1.png"
                   alt="Likes"
                   width="30px"
-                  style={{ cursor: "pointer" }}
-                  onClick={(event) => {
-                    handleLike(post);
-                  }}
                 />{" "}
-                <Link to={`/posts/${post._id}`}>Title: {post.title}</Link>
+                Title: {post.title}
               </h2>
               <ul style={{ textAlign: "left" }}>
                 <li>Primary Category: {post.primaryCategory}</li>
