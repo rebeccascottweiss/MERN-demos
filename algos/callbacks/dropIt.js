@@ -25,9 +25,8 @@ const callback3 = (elem) => false;
 const expected3 = [];
 
 /**
- * Removes every element in the array, starting from idx 0
- * until the callback function returns true when passed the
- * iterated element.
+ * Removes every element in the array, starting from idx 0 until the callback
+ *    function returns true when passed the iterated element.
  * Time: O(?).
  * Space: O(?).
  * @param {Array<any>} arr
