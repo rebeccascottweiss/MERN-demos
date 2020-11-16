@@ -27,10 +27,31 @@ const expected3 = [];
 /**
  * Removes every element in the array, starting from idx 0 until the callback
  *    function returns true when passed the iterated element.
- * Time: O(?).
- * Space: O(?).
+ * Time: O(n) linear. n = arr.length
+ * Space: O(n) linear, due to .splice creating a new array of n length at most.
  * @param {Array<any>} arr
  * @param {Function} callback
  * @return {Array<any>} The given array with only the remaining items.
  */
-function dropIt(arr, callback) {}
+function dropIt(arr, callback) {
+  let delCount = 0;
+
+  for (const elem of arr) {
+    const callbackResult = callback(elem);
+
+    if (callbackResult !== true) {
+      delCount++;
+    } else {
+      break;
+    }
+  }
+
+  arr.splice(0, delCount);
+  return arr;
+}
+
+function dropItFunctional(arr, callback) {
+  const delCount = arr.findIndex((elem) => callback(elem) === true);
+  arr.splice(0, delCount === -1 ? arr.length : delCount);
+  return arr;
+}
