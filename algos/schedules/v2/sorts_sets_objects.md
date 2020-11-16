@@ -55,3 +55,9 @@
 4. Thur
    - [lens](../../objects/lens.js)
    - [getMaxServings](../../objects/getMaxServings.js)
+
+## Week 4 - Misc
+
+1. Mon
+   - [dropIt](../../callbacks/dropIt.js)
+   - [canStringBecomePalindrome](../../strings/canStringBecomePalindrome.js)
