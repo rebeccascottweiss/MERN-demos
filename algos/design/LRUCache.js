@@ -30,8 +30,173 @@
 
 */
 
+const { DoublyLinkedList } = require("../data_structures/DoublyLinkedList");
+
+class CacheItem {
+  constructor(value) {
+    this.value = value;
+    this.lastAccessDate = new Date();
+  }
+}
+
+// when keys are accessed / added the same millisecond, using new Date can no longer guarantee the correct order
 class LRUCache {
-  constructor() {}
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.size = 0;
+    this.cache = {};
+  }
+
+  // Time: O(1) if key exists, O(n) if not -> O(n) linear
+  // Space: O(1)
+  put(key, value) {
+    if (this.cache.hasOwnProperty(key)) {
+      const item = this.cache[key];
+      item.value = value;
+      item.lastAccessDate = new Date();
+    } else {
+      if (this.size === this.capacity) {
+        delete this.cache[this.getLRUKey()];
+        this.size--;
+      }
+      this.cache[key] = new CacheItem(value);
+      this.size++;
+    }
+  }
+
+  // Time: O(1) constant
+  // Space: O(1)
+  get(key) {
+    if (this.cache.hasOwnProperty(key)) {
+      const cacheItem = this.cache[key];
+      cacheItem.lastAccessDate = new Date();
+      return cacheItem.value;
+    } else {
+      return -1;
+    }
+  }
+
+  // Time: O(n) linear
+  // Space: O(1) constant
+  getLRUKey() {
+    let oldestAccessTime = new Date();
+    let LRUKey;
+
+    for (const key in this.cache) {
+      const accessTime = this.cache[key].lastAccessDate;
+
+      if (accessTime < oldestAccessTime) {
+        LRUKey = key;
+        oldestAccessTime = accessTime;
+      }
+    }
+    return LRUKey;
+  }
+}
+
+// To be able to differentiate between least recently used keys when they were both accessed same time (same millisecond)
+class LRUCache2 {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.leastUsedKeyQueue = [];
+    this.cache = {};
+  }
+
+  // Time: O(2n) if key exists (splice + indexOf), O(n) if not from shift -> O(n) linear
+  // Space: O(1) constant
+  put(key, value) {
+    if (this.cache.hasOwnProperty(key)) {
+      this.leastUsedKeyQueue.splice(this.leastUsedKeyQueue.indexOf(key), 1);
+    } else if (this.leastUsedKeyQueue.length === this.capacity) {
+      delete this.cache[this.leastUsedKeyQueue.shift()];
+    }
+
+    this.cache[key] = value;
+    this.leastUsedKeyQueue.push(key);
+  }
+
+  // Time: O(2n) -> O(n) linear
+  // Space: O(1)
+  get(key) {
+    if (this.cache.hasOwnProperty(key)) {
+      this.leastUsedKeyQueue.splice(this.leastUsedKeyQueue.indexOf(key), 1);
+      this.leastUsedKeyQueue.push(key);
+      return this.cache[key];
+    } else {
+      return -1;
+    }
+  }
+}
+
+// O(1) time solution using new Map, hash map in js which preservers key insertion order
+class LRUCache3 {
+  constructor(capacity) {
+    this.cache = new Map();
+    this.capacity = capacity;
+  }
+
+  get(key) {
+    if (this.cache.has(key)) {
+      const y = this.cache.get(key);
+      this.put(key, y);
+      return y;
+    }
+    return -1;
+  }
+
+  put(key, value) {
+    this.cache.delete(key);
+    this.cache.set(key, value);
+
+    if (this.cache.size > this.capacity) {
+      const least = this.cache.keys().next().value;
+      this.cache.delete(least);
+    }
+  }
+}
+
+// Time: O(1) constant, since removeNode by reference (in a doubly linked list), insertAtFront, delete key are all O(1) time
+// Space: O(2n) -> O(n) linear
+class LRUCache4 {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.size = 0;
+    this.cache = new DoublyLinkedList();
+    this.cacheTable = {};
+  }
+
+  // since we always move node to the front after it's been used, the least recently used will always be the tail
+  get(key) {
+    if (this.cacheTable.hasOwnProperty(key)) {
+      this.moveToFront(key);
+      return this.cache.head.data.val;
+    }
+    return -1;
+  }
+
+  put(key, val) {
+    if (this.cacheTable.hasOwnProperty(key)) {
+      this.cacheTable[key].data.val = val;
+      this.moveToFront(key);
+    } else {
+      if (this.size === this.capacity) {
+        const removedNode = this.cache.removeTail();
+        delete this.cacheTable[removedNode.data.key];
+        this.size--;
+      }
+
+      this.cache.insertAtFront({ key, val });
+      this.cacheTable[key] = this.cache.head;
+      this.size++;
+    }
+  }
+
+  moveToFront(key) {
+    const node = this.cacheTable[key];
+    this.cache.removeNode(node);
+    this.cache.insertAtFront(node.data);
+    this.cacheTable[key] = this.cache.head;
+  }
 }
 
 /*************************************************************************
@@ -41,58 +206,76 @@ class LRUCache {
 const lruCache = new LRUCache(2);
 
 const testCases = [
-  { method: "put", arguments: [1, "one"], explanation: "one should be added." },
-  { method: "put", arguments: [2, "two"], explanation: "two should be added." },
   {
-    method: "get",
-    arguments: [1],
-    expected: "one",
-    explanation: "one was previously added.",
+    method: "put",
+    arguments: ["a", "one"],
+    explanation: "'one' should be added.",
   },
   {
     method: "put",
-    arguments: [3, "three"],
-    explanation: "evicts key 2, because key 1 was retrieved more recently.",
+    arguments: ["b", "two"],
+    explanation: "'two' should be added.",
   },
-  { method: "put", arguments: [4, "four"], explanation: "evicts key 1." },
   {
     method: "get",
-    arguments: [1],
+    arguments: ["a"],
+    expected: "'one'",
+    explanation: "'one' was previously added.",
+  },
+  {
+    method: "put",
+    arguments: ["c", "three"],
+    explanation:
+      "Should evict key 'b', because key 'a' was retrieved more recently.",
+  },
+  { method: "put", arguments: ["d", "four"], explanation: "evicts key 'a'." },
+  {
+    method: "get",
+    arguments: ["a"],
     expected: -1,
-    explanation: "one was evicted earlier.",
+    explanation: "'one' was evicted earlier.",
   },
   {
     method: "get",
-    arguments: [2],
+    arguments: ["b"],
     expected: -1,
-    explanation: "two was evicted earlier.",
+    explanation: "'two' was evicted earlier.",
   },
   {
     method: "get",
-    arguments: [3],
-    expected: "three",
-    explanation: "three was added and has not been evicted.",
+    arguments: ["c"],
+    expected: "'three'",
+    explanation: "'three' was added and has not been evicted.",
   },
   {
     method: "get",
     arguments: [4],
-    expected: "four",
-    explanation: "four was added and has not been evicted.",
+    expected: "'four'",
+    explanation: "'four' was added and has not been evicted.",
   },
 ];
 
 testCases.forEach(({ method, arguments, expected, explanation }, idx) => {
   idx === 0 && console.log("-".repeat(85));
   const caseNumStr = `Case ${idx + 1}`;
-  const methodCallStr = `lruCache.${method}(${arguments.join(", ")})`;
+  const methodCallStr = `lruCache.${method}(${arguments
+    .map((a) => `'${a}'`)
+    .join(", ")})`;
   const actual = lruCache[method](...arguments);
 
   console.log(`${caseNumStr}     : ${methodCallStr}`);
 
   if (expected) {
     console.log("Expected   :", expected);
-    console.log("Actual     :", actual);
+    console.log(
+      "Actual     :",
+      typeof actual === "string" ? `'${actual}'` : actual
+    );
   }
   console.log("Explanation:", explanation);
   console.log("-".repeat(85));
 });
+
+module.exports = {
+  LRUCache,
+};
