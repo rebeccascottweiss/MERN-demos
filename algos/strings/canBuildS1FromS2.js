@@ -35,6 +35,10 @@ const expected4 = true;
  * @return {boolean}
  */
 function canBuildS1FromS2(neededChars, availableChars) {
+  if (availableChars.length < neededChars) {
+    return false;
+  }
+
   const availableCharsFreq = {};
 
   for (const availableChar of availableChars) {
